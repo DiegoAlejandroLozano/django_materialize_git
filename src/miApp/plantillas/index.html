@@ -1,0 +1,92 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="{% static 'miApp/materialize/css/materialize.min.css' %}"  media="screen,projection"/>
+
+	{# Estilos propios #}
+	<link rel="stylesheet" href="{% static 'miApp/css/estilos.css' %}">
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+
+<body>
+
+	{# Texto #}
+	<div class="container">
+		<h1>Django y Materialize</h1>
+
+		<p>
+			Esta aplicación web fue desarrollada con Django 1.11.4, con el objetivo de poner en práctica aspectos referentes al manejo de formularios sin uso del propio framework, subida de archivos tipo imagen, manejo de django.core.files.storage.FileSystemStorage, uso de django.contrib. messages  e integración del framework Materialize.
+		</p>
+
+	</div>
+
+	{# Mensaje #}
+	{% if messages %}
+		{% for message in messages %}
+			<div class="container">
+				<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>				
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	{# formulario #}
+	<div class="container">
+		<div class="row">
+			<form action="{% url 'agregar_imagen' %}" class="col s12" method="POST" enctype="multipart/form-data">{% csrf_token %}
+
+				
+
+				<div class="row">
+					<div class="col s12 file-field input-field">
+						<div class="btn">
+							<span>File</span>
+							<input type="file" required="" name="imagen">
+						</div>
+						<div class="file-path-wrapper">
+							<input class="file-path validate" type="text" placeholder="Seleccionar imagen">
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s12">
+						<button class="btn waves-effect waves-light" type="submit" name="action">
+							Submit
+    						<i class="material-icons right">send</i>
+  						</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+	</div>
+
+	{# Carousel #}
+	<div class="container">
+		
+		{{ codigo|safe }}		
+
+	</div>
+
+	{# Botón #}
+	<div class="fixed-action-btn">
+		<a href="{% url 'tabla' %}" class="btn-floating btn-large teal darken-2">
+			<i class="large material-icons">mode_edit</i>
+		</a>
+	</div>
+
+	<!--Import jQuery before materialize.js-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="{% static 'miApp/materialize/js/materialize.min.js' %}"></script>
+
+	{# Scripts necesario para inicializar el carousel #}
+	<script type="text/javascript" src="{% static 'miApp/js/script.js' %}"></script>
+</body>
+</html>

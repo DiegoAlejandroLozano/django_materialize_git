@@ -1,0 +1,82 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<!--Import Google Icon Font-->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<!--Import materialize.css-->
+	<link type="text/css" rel="stylesheet" href="{% static 'miApp/materialize/css/materialize.min.css' %}"  media="screen,projection"/>
+
+	{# Estilos propios #}
+	<link rel="stylesheet" href="{% static 'miApp/css/estilos.css' %}">
+
+	<!--Let browser know website is optimized for mobile-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+	<title>eliminar imagen</title>
+</head>
+<body>
+	
+	<div class="container">
+		<h1>Eliminar imagen</h1>
+	</div>
+
+	{# Mensaje #}
+	{% if messages %}
+		{% for message in messages %}
+			<div class="container">
+				<p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>				
+			</div>
+		{% endfor %}
+	{% endif %}
+
+	{# Botón #}
+	<div class="fixed-action-btn">
+		<a href="{% url 'home' %}" class="btn-floating btn-large teal darken-2">
+			<i class="large material-icons">mode_edit</i>
+		</a>
+	</div>
+
+	{# Tabla #}
+	<div class="container">
+		<table class="bordered striped">
+
+			<thead>
+				<tr>
+					<th>Nombre del archivo</th>
+					<th>Acción</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				
+				{% for imagen in imagenes %}
+					<tr>
+						<td>{{ imagen.nombre }}</td>
+						<td>
+							<form action="{% url 'eliminar' imagen.id %}" method="POST">
+								{% csrf_token %}
+								<button class="btn waves-effect waves-light" type="submit">
+									<i class="material-icons left">
+										delete_forever 
+									</i>
+									Eliminar
+								</button>								
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+
+			</tbody>
+		</table>
+	</div>
+
+	<!--Materialize Scripts-->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="{% static 'miApp/materialize/js/materialize.min.js' %}"></script
+
+</body>
+</html>
